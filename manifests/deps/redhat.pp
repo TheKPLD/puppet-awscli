@@ -17,9 +17,9 @@ class awscli::deps::redhat (
     else {
       include ::epel
     }
-    
+
     Package { require => Class['epel'] }
-  } 
+  }
   if $awscli::install_pkgdeps {
     if ! defined(Package[ $awscli::pkg_dev ]) {
       package { $awscli::pkg_dev: ensure => installed }
@@ -27,7 +27,12 @@ class awscli::deps::redhat (
   }
   if $awscli::install_pip {
     if ! defined(Package[ $awscli::pkg_pip ]) {
-      package { $awscli::pkg_pip: ensure => installed }
+      package { $awscli::pkg_pip: ensure => installed } ->
+      file { '/usr/bin/pip-python':
+        ensure => 'link',
+        target => '/usr/bin/pip',
+        before => Package['awscli']
+      }
     }
   }
 }
