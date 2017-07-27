@@ -14,3 +14,10 @@ source_profile=<%= @source_profile %>
 <% if @role_session_name -%>
 role_session_name=<%= @role_session_name %>
 <% end -%>
+<% unless @s3.nil? or @s3.empty? -%>
+s3 =
+<% @s3.each do |key,value| -%>
+    <%= key %> = <%= value %>
+<% end -%>
+<% end -%>
+

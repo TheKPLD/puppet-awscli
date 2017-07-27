@@ -74,6 +74,7 @@ define awscli::profile(
   $aws_region            = 'us-east-1',
   $profile_name          = 'default',
   $output                = 'json',
+  $s3                    = undef,
 ) {
   if $aws_access_key_id == undef and $aws_secret_access_key == undef {
     info ('AWS keys for awscli::profile. Your will need IAM roles configured.')
@@ -106,6 +107,10 @@ define awscli::profile(
     }
   } else {
     $group_real = $group
+  }
+
+  if($s3) {
+    validate_hash($s3)
   }
 
   # ensure $homedir/.aws is available

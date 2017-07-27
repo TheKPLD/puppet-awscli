@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
     config.vm.box_version = "1.0.1"
     ubuntu.vm.provision :shell, :inline => 'wget -qO - http://apt.puppetlabs.com/DEB-GPG-KEY-puppetlabs | sudo apt-key add -'
     ubuntu.vm.provision :shell, :inline => 'wget -qO - http://apt.puppetlabs.com/DEB-GPG-KEY-puppet | sudo apt-key add -'
-    ubuntu.vm.provision :shell, :inline => 'apt-get update'
+    ubuntu.vm.provision :shell, :inline => 'apt-get -qq update'
     ubuntu.vm.provision :puppet do |puppet|
       puppet.manifests_path = "tests"
       puppet.manifest_file  = "vagrant.pp"
